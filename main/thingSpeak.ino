@@ -29,5 +29,5 @@ void setThingSpeakValue(int num) {
 }
 
 void sendToThingSpeak() {
-  ThingSpeak.writeFields(THING_SPEAK_CHANNEL_ID, THING_SPEAK_API_KEY);
+  ThingSpeak.writeFields(THINGSPEAK_CHANNEL_ID, THINGSPEAK_WRITE_API_KEY);
 }

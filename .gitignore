@@ -55,3 +55,8 @@ dkms.conf
 *.dwo
 
 secrets.h
+.env
+node_modules/
+app.db
+.env
+npm-debug.log*
