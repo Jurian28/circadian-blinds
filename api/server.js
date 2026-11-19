@@ -51,7 +51,11 @@ app.post("/api/sensors", (req, res) => {
 		return res.status(400).json({ error: "motor, light and rain must all be numbers." });
 	}
 
+
 	setSensors.run(motor, light, rain);
+	console.log("SENSOR DATA SENT:" + motor + ", " + light + ", " + rain);
+	console.log("");
+	console.log(getData.get());
 	res.json(getData.get());
 });
 
