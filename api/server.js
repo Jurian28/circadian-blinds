@@ -44,11 +44,11 @@ app.get("/api/data", (req, res) => {
 });
 
 app.get("/api/wakeup-time", (req, res) => {
-	res.json(getWakeupTime.get());
+	res.type("text/plain").send(string(getWakeupTime.get()));
 });
 
 app.get("/api/blind-status", (req, res) => {
-	res.json(getBlindStatus.get());
+	res.type("text/plain").send(string(getBlindStatus.get()));
 });
 
 // Set the sensor values, e.g. {"Motor": 0, "Light": 512, "Rain": 0}.
