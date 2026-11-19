@@ -23,7 +23,11 @@ const getData = db.prepare(
 	"SELECT motor, light, rain, blindStatus, wakeupTime FROM data WHERE id = 1"
 );
 
-const getSettings = db.prepare(
+const getBlindStatus = db.prepare(
+	"SELECT blindStatus, wakeupTime FROM data WHERE id = 1"
+);
+
+const getWakeupTime = db.prepare(
 	"SELECT blindStatus, wakeupTime FROM data WHERE id = 1"
 );
 const setSensors = db.prepare("UPDATE data SET motor = ?, light = ?, rain = ? WHERE id = 1");
@@ -39,9 +43,12 @@ app.get("/api/data", (req, res) => {
 	res.json(getData.get());
 });
 
-// Get all current settings.
-app.get("/api/settings", (req, res) => {
-	res.json(getSettings.get());
+app.get("/api/wakeup-time", (req, res) => {
+	res.json(getWakeupTime.get());
+});
+
+app.get("/api/blind-status", (req, res) => {
+	res.json(getBlindStatus.get());
 });
 
 // Set the sensor values, e.g. {"Motor": 0, "Light": 512, "Rain": 0}.
@@ -51,11 +58,7 @@ app.post("/api/sensors", (req, res) => {
 		return res.status(400).json({ error: "motor, light and rain must all be numbers." });
 	}
 
-
 	setSensors.run(motor, light, rain);
-	console.log("SENSOR DATA SENT:" + motor + ", " + light + ", " + rain);
-	console.log("");
-	console.log(getData.get());
 	res.json(getData.get());
 });
 
