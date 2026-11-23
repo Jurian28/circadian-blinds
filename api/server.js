@@ -39,7 +39,7 @@ const setWakeupTime = db.prepare("UPDATE data SET wakeupTime = ? WHERE id = 1");
 
 const isNumber = (v) => typeof v === "number" && Number.isFinite(v);
 const isStatus = (v) => ["open", "closed", "automatic"].includes(v);
-const isTime = (v) => v === null || typeof v === "string" && /^([01]\d|2[0-3]):[0-5]\d$/.test(v);
+const isTime = (v) => typeof v === "string" && /^([01]\d|2[0-3]):[0-5]\d$/.test(v);
 
 // Get all current data.
 app.get("/api/data", (req, res) => {

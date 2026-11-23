@@ -55,25 +55,6 @@ document.getElementById("saveTime").addEventListener("click", async () => {
 	}
 });
 
-document.getElementById("clearTime").addEventListener("click", async () => {
-	try {
-		const wakeupTime = null;
-
-		await sendRequest("/api/wakeup-time", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ wakeupTime })
-		});
-
-		await loadData();
-		message.textContent = "Wake-up time saved.";
-	} catch (error) {
-		message.textContent = "Could not save time: " + error.message;
-	}
-});
-
-
-
 document.getElementById("saveStatus").addEventListener("click", async () => {
 	try {
 		const blindStatus = document.getElementById("status").value;
