@@ -22,9 +22,9 @@ void connectToWifi() {
 }
 
 
-int getWakeupTime() {
+String getWakeupTime() {
   if(WiFi.status() != WL_CONNECTED ){
-    return -1;
+    return "";
   }
 
   String url = "https://circadian-blinds.onrender.com/api/wakeup-time";
@@ -36,9 +36,9 @@ int getWakeupTime() {
   http.end();
 
   if (httpResponseCode != 200) {
-    return -1;
+    return "";
   }
-  return atoi(response.c_str()); //into int
+  return response;
 }
 
 String getBlindStatus() {

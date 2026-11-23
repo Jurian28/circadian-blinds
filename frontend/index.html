@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Blind Control</title>
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<h1>Blind Control</h1>
+		<p>View the latest sensor readings and change the settings.</p>
+
+		<section>
+			<h2>Latest sensor data</h2>
+			<p class="reading">Motion: <strong id="motion">—</strong></p>
+			<p class="reading">Light: <strong id="light">—</strong></p>
+			<p class="reading">Rain: <strong id="rain">—</strong></p>
+			<p id="lastUpdate">Loading data...</p>
+			<button id="refresh">Refresh data</button>
+			<p>Data refreshes automatically every 30 seconds.</p>
+		</section>
+
+		<section>
+			<h2>Change settings</h2>
+
+			<label for="wakeTime">Wake-up time</label>
+			<input id="wakeTime" type="time">
+			<button id="saveTime">Save time</button>
+
+			<label for="status">Blind status</label>
+			<select id="status">
+				<option value="closed">Closed</option>
+				<option value="open">Open</option>
+				<option value="automatic">Automatic</option>
+			</select>
+			<button id="saveStatus">Save status</button>
+
+			<p id="message" role="status"></p>
+		</section>
+
+		<script src="script.js"></script>
+
+	</body>
+</html>

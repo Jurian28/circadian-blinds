@@ -1,0 +1,37 @@
+body {
+	max-width: 650px;
+	margin: 40px auto;
+	padding: 0 16px;
+	font: 16px Arial, sans-serif;
+	color: #222;
+	background: #f4f4f4;
+}
+section {
+	margin: 16px 0;
+	padding: 20px;
+	background: white;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+}
+
+.reading {
+	margin: 10px 0;
+}
+
+label {
+	display: block;
+	margin: 14px 0 6px;
+}
+
+input, select, button {
+	padding: 9px;
+	font: inherit;
+}
+
+button {
+	cursor: pointer;
+}
+
+#message, #lastUpdate {
+	min-height: 20px;
+}
