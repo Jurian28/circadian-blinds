@@ -1,17 +1,20 @@
 body {
-	max-width: 650px;
-	margin: 40px auto;
-	padding: 0 16px;
+	max-width: 1200px;
+	width: 95%;
+	margin: 20px auto;
 	font: 16px Arial, sans-serif;
-	color: #222;
-	background: #f4f4f4;
+	color: #000;
 }
+
+.row {
+	display: flex;
+	gap: 20px;
+}
+
 section {
-	margin: 16px 0;
+	flex: 1;
 	padding: 20px;
-	background: white;
-	border: 1px solid #ddd;
-	border-radius: 6px;
+	border: 1px solid #000;
 }
 
 .reading {

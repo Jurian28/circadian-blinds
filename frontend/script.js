@@ -6,7 +6,7 @@ async function sendRequest(url, options) {
 	const response = await fetch(ApiUrl + url, options);
 	const result = await response.json();
 
-	if (!response.ok || !result.success) {
+	if (!response.ok) {
 		throw new Error(result.error || "Request failed");
 	}
 
@@ -15,16 +15,13 @@ async function sendRequest(url, options) {
 
 async function loadData() {
 	try {
-		const result = await sendRequest("/api/data");
-		const data = result.data;
+		const data = await sendRequest("/api/data");
 
-		document.getElementById("motion").textContent = data.motion ?? "—";
+		document.getElementById("motion").textContent = data.motor ?? "—";
 		document.getElementById("light").textContent = data.light ?? "—";
 		document.getElementById("rain").textContent = data.rain ?? "—";
 
-		document.getElementById("lastUpdate").textContent = data.updatedAt
-			? "Last updated: " + new Date(data.updatedAt).toLocaleString()
-			: "No update time available";
+		document.getElementById("lastUpdate").textContent = "Last updated: " + new Date().toLocaleTimeString();
 
 		if (data.wakeupTime) {
 			document.getElementById("wakeTime").value = data.wakeupTime;
@@ -58,14 +55,33 @@ document.getElementById("saveTime").addEventListener("click", async () => {
 	}
 });
 
+document.getElementById("clearTime").addEventListener("click", async () => {
+	try {
+		const wakeupTime = null;
+
+		await sendRequest("/api/wakeup-time", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ wakeupTime })
+		});
+
+		await loadData();
+		message.textContent = "Wake-up time saved.";
+	} catch (error) {
+		message.textContent = "Could not save time: " + error.message;
+	}
+});
+
+
+
 document.getElementById("saveStatus").addEventListener("click", async () => {
 	try {
-		const status = document.getElementById("status").value;
+		const blindStatus = document.getElementById("status").value;
 
 		await sendRequest("/api/status", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ status })
+			body: JSON.stringify({ blindStatus })
 		});
 
 		await loadData();
