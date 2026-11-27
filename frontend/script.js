@@ -13,7 +13,7 @@ async function sendRequest(url, options) {
 	return result;
 }
 
-async function loadData() {
+async function loadData(fillInputs = false) {
 	try {
 		const data = await sendRequest("/api/data");
 
@@ -23,12 +23,14 @@ async function loadData() {
 
 		document.getElementById("lastUpdate").textContent = "Last updated: " + new Date().toLocaleTimeString();
 
-		if (data.wakeupTime) {
-			document.getElementById("wakeTime").value = data.wakeupTime;
-		}
+		if (fillInputs) {
+			if (data.wakeupTime) {
+				document.getElementById("wakeTime").value = data.wakeupTime;
+			}
 
-		if (data.blindStatus) {
-			document.getElementById("status").value = data.blindStatus;
+			if (data.blindStatus) {
+				document.getElementById("status").value = data.blindStatus;
+			}
 		}
 	} catch (error) {
 		document.getElementById("lastUpdate").textContent =
@@ -72,5 +74,5 @@ document.getElementById("saveStatus").addEventListener("click", async () => {
 	}
 });
 
-loadData();
-setInterval(loadData, 30000);
+loadData(true);
+setInterval(loadData(false), 10000);

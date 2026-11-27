@@ -1,23 +1,35 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include "secrets.h"
+#include <iostream>
+#include <string> 
 
 
-WiFiClient client;
+WiFiClientSecure client;
+
 
 void setupApiClient() {
   connectToWifi();
+  while (WiFi.status() != WL_CONNECTED) {
+    connectToWifi();
+  }
+  client.setInsecure();
+
 }
 
 void connectToWifi() {
   WiFi.begin(WIFI_NAME, WIFI_PASSWORD);
 
+  int i = 0;
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
+    i++;
+    if (i>20) {
+      break;
+    }
     Serial.print(".");
   }
 
-  Serial.println("\nConnected!");
   Serial.println(WiFi.localIP());
 }
 
@@ -29,12 +41,15 @@ String getWakeupTime() {
 
   String url = "https://circadian-blinds.onrender.com/api/wakeup-time";
 
+
   HTTPClient http;
-  http.begin(url.c_str());
+  http.begin(client, url);
   int httpResponseCode = http.GET();
   String response = http.getString();
   http.end();
 
+  Serial.println("httpResponseCode: [" + String(httpResponseCode) + "]");  
+  // Serial.println("response = " + response);
   if (httpResponseCode != 200) {
     return "";
   }
@@ -49,7 +64,7 @@ String getBlindStatus() {
   String url = "https://circadian-blinds.onrender.com/api/blind-status";
 
   HTTPClient http;
-  http.begin(url.c_str());
+  http.begin(client, url);
   int httpResponseCode = http.GET();
   String response = http.getString();
   http.end();
@@ -71,7 +86,7 @@ int sendSensorDataToApi(float motor, float light, float rain) {
     ",\"rain\":" + String(rain) + "}";
 
   HTTPClient http;
-  http.begin(url.c_str());
+  http.begin(client, url);
   http.addHeader("Content-Type", "application/json");
   int httpResponseCode = http.POST(body);
 
